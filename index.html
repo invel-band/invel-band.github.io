@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invel — Alternative Rock · Cesena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f0ede8;
+      --green: #1dd175;
+      --gray: #1a1a1a;
+      --mid: #2a2a2a;
+      --muted: #666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 6px;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('artwork.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.45) saturate(0.8);
+      transform: scale(1.05);
+      animation: slowzoom 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes slowzoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.2) 50%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 2.5rem 4rem;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeup 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 15vw, 12rem);
+      line-height: 0.9;
+      letter-spacing: 8px;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeup 0.8s 0.4s forwards;
+    }
+
+    .hero-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 1.5rem;
+      max-width: 480px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeup 0.8s 0.6s forwards;
+    }
+
+    .hero-sub em {
+      color: var(--white);
+      font-style: italic;
+    }
+
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--mid);
+    }
+
+    /* BIO */
+    .bio-text {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      line-height: 1.9;
+      color: var(--white);
+      opacity: 0.85;
+    }
+
+    .bio-text strong {
+      color: var(--green);
+      font-weight: 400;
+    }
+
+    /* CONCERTI */
+    .shows-list { display: flex; flex-direction: column; gap: 0; }
+
+    .show-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--mid);
+      gap: 1rem;
+    }
+
+    .show-row:first-child { border-top: 1px solid var(--mid); }
+
+    .show-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--muted);
+      min-width: 80px;
+      letter-spacing: 2px;
+    }
+
+    .show-info { flex: 1; }
+
+    .show-venue {
+      font-size: 0.9rem;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .show-city {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    .show-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid var(--green);
+      background: transparent;
+      padding: 8px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .show-btn:hover {
+      background: var(--green);
+      color: var(--black);
+    }
+
+    .show-tba .show-date { color: var(--mid); }
+    .show-tba .show-venue { color: var(--muted); }
+
+    /* MUSICA */
+    .music-card {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      background: var(--gray);
+      border: 1px solid var(--mid);
+      padding: 2rem;
+    }
+
+    .music-cover {
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .music-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.7);
+    }
+
+    .music-info {}
+
+    .music-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+
+    .music-meta {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .music-link {
+      display: inline-block;
+      margin-top: 1.2rem;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green);
+      text-decoration: none;
+      border-bottom: 1px solid var(--green);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .music-link:hover { opacity: 0.7; }
+
+    /* CONTATTI */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--mid);
+      border: 1px solid var(--mid);
+    }
+
+    .contact-item {
+      background: var(--black);
+      padding: 1.5rem 2rem;
+    }
+
+    .contact-label {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .contact-val {
+      font-size: 0.85rem;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+
+    .contact-val a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-val a:hover { color: var(--green); }
+
+    /* SOCIAL */
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .social-link {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--mid);
+      padding: 10px 20px;
+      transition: all 0.2s;
+    }
+
+    .social-link:hover {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--mid);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero-content { padding: 0 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .music-card { flex-direction: column; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .show-row { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Invel</a>
+    <ul class="nav-links">
+      <li><a href="#bio">bio</a></li>
+      <li><a href="#concerti">concerti</a></li>
+      <li><a href="#musica">musica</a></li>
+      <li><a href="#contatti">contatti</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Alternative Rock · Cesena</p>
+      <h1 class="hero-title">INVEL</h1>
+      <p class="hero-sub"><em>"che non va da nessuna parte"</em> — dal dialetto romagnolo.</p>
+    </div>
+  </div>
+
+  <section id="bio">
+    <p class="section-label">Bio</p>
+    <p class="bio-text">
+      <strong>Invel</strong> — dal dialetto romagnolo, "che non va da nessuna parte". Un nome che è già un manifesto. Rock alternativo con radici nel grunge, cinque brani registrati, mixati e prodotti in totale indipendenza. Nessuna direzione prestabilita.
+    </p>
+  </section>
+
+  <section id="concerti">
+    <p class="section-label">Concerti</p>
+    <div class="shows-list">
+      <div class="show-row show-tba">
+        <div class="show-date">TBA</div>
+        <div class="show-info">
+          <div class="show-venue">Da annunciare</div>
+          <div class="show-city">Estate 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="musica">
+    <p class="section-label">Musica</p>
+    <div class="music-card">
+      <div class="music-cover">
+        <img src="artwork.jpg" alt="Invel EP artwork" />
+      </div>
+      <div class="music-info">
+        <div class="music-title">EP 2026</div>
+        <div class="music-meta">5 brani · disponibile su Bandcamp</div>
+        <a href="https://invel.bandcamp.com" target="_blank" class="music-link">Ascolta su Bandcamp →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contatti">
+    <p class="section-label">Contatti</p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-label">Info</div>
+        <div class="contact-val"><a href="mailto:info@invel-band.it">info@invel-band.it</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Booking</div>
+        <div class="contact-val"><a href="mailto:booking@invel-band.it">booking@invel-band.it</a></div>
+      </div>
+    </div>
+    <div class="social-row">
+      <a href="https://instagram.com/invelband" target="_blank" class="social-link">Instagram</a>
+      <a href="https://invel.bandcamp.com" target="_blank" class="social-link">Bandcamp</a>
+      <a href="#" class="social-link">Spotify</a>
+      <a href="#" class="social-link">YouTube</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Invel</span>
+    <span>invel-band.it</span>
+  </footer>
+
+</body>
+</html>
